@@ -1,0 +1,13 @@
+services:
+  openvpn:
+    image: openvpn/openvpn-as
+    container_name: openvpn
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 943:943
+      - 443:443
+      - 1194:1194/udp
+    volumes:
+      - ./openvpn:/openvpn
+    restart: unless-stopped

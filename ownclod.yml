@@ -1,0 +1,21 @@
+networks:
+  own_cloud_net:
+    ipam:
+      config:
+        - subnet: 10.101.1.0/24
+
+services:
+  own_cloud_cl:
+    container_name: own_cloud_cl
+    hostname: own_cloud_cl
+    image: owncloud/server:10
+    restart: always
+    env_file:
+      - ./.owncloud.env
+    volumes:
+      - /opt/volumes/ownCloud/:/var/www/html/
+    networks:
+      own_cloud_net:
+        ipv4_address: 10.101.1.10
+    ports:
+      - "80:8080"

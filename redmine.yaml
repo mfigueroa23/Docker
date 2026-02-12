@@ -1,0 +1,35 @@
+networks:
+  redmine_net:
+    ipam:
+      config:
+        - subnet: 10.101.1.0/24
+
+services:
+
+  redmine:
+    container_name: redmine
+    hostname: redmine
+    image: redmine
+    restart: always
+    ports:
+      - 80:3000
+    env_file:
+      - ./.redmine.env
+    networks:
+      redmine_net:
+        ipv4_address: 10.101.1.10
+
+  redmine_db:
+    container_name: redmine_db
+    hostname: redmine_db
+    image: mysql:8.1.0
+    restart: always
+    env_file:
+      - ./.mysql.env
+    volumes:
+      - ./.redmine_db/:/var/lib/mysql/
+    networks:
+      redmine_net:
+        ipv4_address: 10.101.1.11
+    ports:
+      - "3306:3306"
