@@ -1,0 +1,9 @@
+services:
+  cloudflare:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare
+    restart: always
+    environment:
+      - TZ=America/Santiago
+    command: tunnel --no-autoupdate run --token {YOUR_TOKEN}
+    network_mode: host
